@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/psutil-d
+psutil-d.so
+psutil-d.dylib
+psutil-d.dll
+psutil-d.a
+psutil-d.lib
+psutil-d-test-*
+*.exe
+*.o
+*.obj
+*.lst

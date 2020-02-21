@@ -1,0 +1,5 @@
+name "psutil-d"
+description "A process and system monitoring library for D."
+authors "Hiroki Noda"
+copyright "Copyright © 2020, Hiroki Noda"
+license "BSL-1.0"
