@@ -13,3 +13,4 @@ psutil-d-test-*
 *.o
 *.obj
 *.lst
+*.a
