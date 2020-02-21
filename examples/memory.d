@@ -1,5 +1,5 @@
 /+dub.sdl:
-name "sensors"
+name "memory"
 dependency "psutil" path="../"
 +/
 import std.stdio;
