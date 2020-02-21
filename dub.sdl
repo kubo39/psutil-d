@@ -1,4 +1,4 @@
-name "psutil-d"
+name "psutil"
 description "A process and system monitoring library for D."
 authors "Hiroki Noda"
 copyright "Copyright © 2020, Hiroki Noda"
