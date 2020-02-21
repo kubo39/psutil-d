@@ -3,3 +3,4 @@
 Currently implemented:
 
 - sensors.fan
+- sensors.temperature
