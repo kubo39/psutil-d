@@ -5,6 +5,7 @@ A system monitoring library for D, heavily inspired by [psutil](https://github.c
 Currently implemented:
 
 - cpu.stats
+- cpu.times
 - memory.memory
 - memory.swap
 - sensors.battery
