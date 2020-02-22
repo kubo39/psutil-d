@@ -4,8 +4,14 @@ dependency "psutil" path="../"
 +/
 import std.stdio;
 
+import psutil.cpu.count;
 import psutil.cpu.stats;
 import psutil.cpu.times;
+
+void printLogicalCPUs()
+{
+    writefln("Logical CPUs:\t%d", logicalCount());
+}
 
 void printStats()
 {
@@ -59,6 +65,8 @@ void printPerCpuTimes()
 
 void main()
 {
+    writeln("===Logical CPU Count===");
+    printLogicalCPUs();
     writeln("===CPU Stats===");
     printStats();
     writeln("===CPU Times===");
