@@ -60,6 +60,11 @@ struct Swap
     ulong total;  // SwapTotal
     ulong free;   // SwapFree
     VmStat vmStat;
+
+    ulong used() @nogc nothrow pure @safe
+    {
+        return total - free;
+    }
 }
 
 /**
