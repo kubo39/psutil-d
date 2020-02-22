@@ -12,7 +12,7 @@ __gshared size_t CLOCK_TICKS;
 
 ///
 version(linux)
-struct Times
+struct Time
 {
     double user;
     double nice;
@@ -30,9 +30,9 @@ struct Times
  * Returns system-wide CPU times.
  */
 version(linux)
-Times times()
+Time time()
 {
-    Times times;
+    Time time;
 
     // cumulative time is always the first line.
     auto values = File(PROCFS_STAT_PATH).readln.split.dropOne;
@@ -43,41 +43,41 @@ Times times()
         switch (i)
         {
         case 0:
-            times.user = value;
+            time.user = value;
             break;
         case 1:
-            times.nice = value;
+            time.nice = value;
             break;
         case 2:
-            times.idle = value;
+            time.idle = value;
             break;
         case 3:
-            times.system = value;
+            time.system = value;
             break;
         case 4:
-            times.iowait = value;
+            time.iowait = value;
             break;
         case 5:
-            times.irq = value;
+            time.irq = value;
             break;
         case 6:
-            times.softirq = value;
+            time.softirq = value;
             break;
         case 7:
-            times.steal = value;
+            time.steal = value;
             break;
         case 8:
-            times.guest = Nullable!double(value);
+            time.guest = Nullable!double(value);
             break;
         case 9:
-            times.guestnice = Nullable!double(value);
+            time.guestnice = Nullable!double(value);
             break;
         default:
             continue;  // should fix?
         }
     }
 
-    return times;
+    return time;
 }
 
 ///

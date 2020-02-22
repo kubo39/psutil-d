@@ -18,11 +18,11 @@ void printStats()
     }
 }
 
-void printTimes()
+void printTime()
 {
-    auto times = times();
-    with (times)
-    {
+    auto time = time();
+    with (time)
+   {
         writefln("user:\t%3f", user);
         writefln("nice:\t%3f", nice);
         writefln("system:\t%3f", system);
@@ -41,5 +41,5 @@ void main()
     writeln("===CPU Stats===");
     printStats();
     writeln("===CPU Times===");
-    printTimes();
+    printTime();
 }
