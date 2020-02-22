@@ -1,3 +1,4 @@
 module psutil.cpu;
 
-import psutil.cpu.stats;
+public import psutil.cpu.times;
+public import psutil.cpu.stats;
