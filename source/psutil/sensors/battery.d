@@ -16,6 +16,7 @@ struct Battery
     float powerNow;
     float energyFull;
     float percent;
+    bool powerPlugged;
     string technology;
 }
 
@@ -45,6 +46,12 @@ Nullable!Battery battery()
     if (energyNow.isNull || powerNow.isNull || energyFull.isNull)
         return typeof(return).init;
 
+    // Is AC power cable plugged in?
+    bool powerPlugged = false;
+    auto online = getMetrics!int(buildPath(SYSFS_POWER_SUPPLY_PATH, "AC0/online"));
+    if (!online.isNull)
+        powerPlugged = online.get == 1;
+
     string technology = getMetrics!string(buildPath(root, "technology")).get;
 
     auto percent = 100.0 * energyNow / energyFull;
@@ -52,5 +59,6 @@ Nullable!Battery battery()
                             powerNow.get,
                             energyFull.get,
                             percent,
+                            powerPlugged,
                             technology));
 }
