@@ -7,6 +7,7 @@ Currently implemented:
 - cpu.stats
 - memory.memory
 - memory.swap
+- sensors.battery
 - sensors.fan
 - sensors.temperature
 
