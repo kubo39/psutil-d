@@ -12,7 +12,7 @@ __gshared size_t CLOCK_TICKS;
 
 ///
 version(linux)
-struct Time
+struct Times
 {
     double user;
     double nice;
@@ -26,16 +26,10 @@ struct Time
     Nullable!double guestnice;
 }
 
-/**
- * Returns system-wide CPU times.
- */
+///
 version(linux)
-Time time()
+private void time(R)(ref Times times, R values)
 {
-    Time time;
-
-    // cumulative time is always the first line.
-    auto values = File(PROCFS_STAT_PATH).readln.split.dropOne;
     foreach (i, part; values)
     {
         auto value = part.parse!uint.to!double / CLOCK_TICKS;
@@ -43,41 +37,72 @@ Time time()
         switch (i)
         {
         case 0:
-            time.user = value;
+            times.user = value;
             break;
         case 1:
-            time.nice = value;
+            times.nice = value;
             break;
         case 2:
-            time.idle = value;
+            times.idle = value;
             break;
         case 3:
-            time.system = value;
+            times.system = value;
             break;
         case 4:
-            time.iowait = value;
+            times.iowait = value;
             break;
         case 5:
-            time.irq = value;
+            times.irq = value;
             break;
         case 6:
-            time.softirq = value;
+            times.softirq = value;
             break;
         case 7:
-            time.steal = value;
+            times.steal = value;
             break;
         case 8:
-            time.guest = Nullable!double(value);
+            times.guest = Nullable!double(value);
             break;
         case 9:
-            time.guestnice = Nullable!double(value);
+            times.guestnice = Nullable!double(value);
             break;
-        default:
+       default:
             continue;  // should fix?
         }
     }
+}
 
-    return time;
+/**
+ * Returns system-wide CPU time.
+ */
+version(linux)
+Times times()
+{
+    Times times;
+    // cumulative time is always the first line.
+    time(times, File(PROCFS_STAT_PATH).readln.split.dropOne);
+    return times;
+}
+
+/**
+ * Returns the CPU times for every CPU available on the system.
+ */
+version(linux)
+Times[] perTimes()
+{
+    import std.string : startsWith;
+
+    Times[] perTimes;
+    foreach (line; File(PROCFS_STAT_PATH).byLine.dropOne)
+    {
+        if (!line.startsWith("cpu"))
+            continue;
+
+        Times times;
+        time(times, line.split.dropOne);
+        perTimes ~= times;
+    }
+    return perTimes;
 }
 
 ///

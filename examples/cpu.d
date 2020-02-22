@@ -18,10 +18,10 @@ void printStats()
     }
 }
 
-void printTime()
+void printTimes()
 {
-    auto time = time();
-    with (time)
+    auto times = times();
+    with (times)
    {
         writefln("user:\t%3f", user);
         writefln("nice:\t%3f", nice);
@@ -36,10 +36,33 @@ void printTime()
    }
 }
 
+void printPerCpuTimes()
+{
+    auto perTimes = perTimes();
+    foreach (cpu; perTimes)
+    {
+        with (cpu)
+        {
+            writefln("user:\t%3f", user);
+            writefln("nice:\t%3f", nice);
+            writefln("system:\t%3f", system);
+            writefln("idle:\t%3f", idle);
+            writefln("iowait:\t%3f", iowait);
+            writefln("irq:\t%3f", irq);
+            writefln("softirq:\t%3f", softirq);
+            writefln("steal:\t%3f", steal);
+            writefln("guest:\t%3f", guest);
+            writefln("guestnice:\t%3f", guestnice);
+        }
+    }
+}
+
 void main()
 {
     writeln("===CPU Stats===");
     printStats();
     writeln("===CPU Times===");
-    printTime();
+    printTimes();
+    writeln("===Per CPU Times===");
+    printPerCpuTimes();
 }
