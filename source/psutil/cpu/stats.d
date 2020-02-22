@@ -45,7 +45,7 @@ CpuStats stats()
         default:
             continue;
         }
-        *field = line[1].to!ulong;
+        *field = pair[1].to!ulong;
     }
     return stats;
 }
