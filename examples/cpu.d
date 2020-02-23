@@ -11,6 +11,7 @@ import psutil.cpu.times;
 void printLogicalCPUs()
 {
     writefln("Logical CPUs:\t%d", logicalCount());
+    writefln("Physical CPUs:\t%d", physicalCount());
 }
 
 void printStats()
