@@ -1,6 +1,6 @@
 module psutil.cpu.stats;
 
-import std.conv : to;
+import std.conv : parse;
 import std.stdio : File;
 import std.string : split;
 
@@ -26,26 +26,22 @@ CpuStats stats()
     {
         auto pair = line.split(' ');
 
-        string name;
         ulong* field;
         switch (pair[0])
         {
         case "ctxt":
-            name = "ctxt";
             field = &stats.ctxSwitches;
             break;
         case "intr":
-            name = "intr";
             field = &stats.interrupts;
             break;
-        case "softireq":
-            name = "softireq";
+        case "softirq":
             field = &stats.softInterrupts;
             break;
         default:
             continue;
         }
-        *field = pair[1].to!ulong;
+        *field = pair[1].parse!ulong;
     }
     return stats;
 }
