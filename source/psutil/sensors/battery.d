@@ -15,9 +15,13 @@ struct Battery
     float energyNow;
     float powerNow;
     float energyFull;
-    float percent;
     bool powerPlugged;
     string technology;
+
+    float percent() @nogc nothrow pure @safe
+    {
+        return 100.0 * energyNow / energyFull;
+    }
 }
 
 ///
@@ -54,11 +58,6 @@ Nullable!Battery battery()
 
     string technology = getMetrics!string(buildPath(root, "technology")).get;
 
-    auto percent = 100.0 * energyNow / energyFull;
-    return nullable(Battery(energyNow.get,
-                            powerNow.get,
-                            energyFull.get,
-                            percent,
-                            powerPlugged,
-                            technology));
+    return nullable(Battery(energyNow.get, powerNow.get, energyFull.get,
+                            powerPlugged, technology));
 }
