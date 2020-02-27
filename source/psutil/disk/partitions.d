@@ -45,20 +45,21 @@ private string[] fstypes()
 version(linux)
 Partition[] partitions()
 {
+    import std.ascii : isWhite;
+
     Partition[] partitions;
     string[] fstypes = fstypes();
-    foreach (line; File("/proc/mounts").byLine)
+    foreach (line; File("/proc/mounts").byLineCopy)
     {
         Partition partition;
-
-        auto parsed = line.split(' ');
+        auto parsed = line.split!isWhite;
 
         // ugly...
-        auto device = parsed[0];
+        auto device = cast(immutable) parsed[0];
         if (device == "none")
             partition.device = Nullable!string.init;
         else
-            partition.device = nullable(cast(immutable) device);
+            partition.device = nullable(device);
 
         partition.mountpoint = cast(immutable) parsed[1];
         partition.fstype = cast(immutable) parsed[2];
