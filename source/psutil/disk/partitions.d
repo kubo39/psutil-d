@@ -2,7 +2,7 @@ module psutil.disk.partitions;
 
 import std.stdio : File;
 import std.string : split, startsWith, strip;
-import std.typecons : Nullable;
+import std.typecons : Nullable, nullable;
 
 ///
 version(linux)
@@ -54,7 +54,12 @@ Partition[] partitions()
         auto parsed = line.split(' ');
 
         // ugly...
-        partition.device = cast(immutable) parsed[0];
+        auto device = parsed[0];
+        if (device == "none")
+            partition.device = Nullable!string.init;
+        else
+            partition.device = nullable(cast(immutable) device);
+
         partition.mountpoint = cast(immutable) parsed[1];
         partition.fstype = cast(immutable) parsed[2];
         partition.options = cast(immutable) parsed[3];

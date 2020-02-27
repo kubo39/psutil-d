@@ -8,6 +8,12 @@ import psutil.disk.partitions;
 
 void main()
 {
-    foreach (part; partitions())
-        writeln(part);
+    foreach (i, part; partitions())
+    {
+        writefln("partition %d", i);
+        writefln("  device: %s", part.device);
+        writefln("  mountpoint: %s", part.mountpoint);
+        writefln("  fstype: %s", part.fstype);
+        writefln("  options: %s", part.options);
+    }
 }
