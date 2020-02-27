@@ -7,6 +7,7 @@ Currently implemented:
 - cpu.count
 - cpu.stats
 - cpu.times
+- disk.partitions
 - memory.memory
 - memory.swap
 - sensors.battery
@@ -19,6 +20,12 @@ Currently implemented:
 
 ```console
 $ dub examples/cpu.d
+```
+
+### Disk
+
+```console
+$ dub examples/disk.d
 ```
 
 ### Memory
